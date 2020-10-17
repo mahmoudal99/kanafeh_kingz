@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "658073414013",
+    "firebase_url": "https://kanafeh-kings.firebaseio.com",
+    "project_id": "kanafeh-kings",
+    "storage_bucket": "kanafeh-kings.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658073414013:android:279a70ffda06507ca40414",
+        "android_client_info": {
+          "package_name": "com.kanafeh.kanafeh_kings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658073414013-04a7l93bpv3mq56ogih6b8svdje51kbu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kanafeh.kanafeh_kings",
+            "certificate_hash": "6ce359fea048c94f4384a8558c5733bdb3014495"
+          }
+        },
+        {
+          "client_id": "658073414013-meek5lqq97sper2kdaje3tl5hpokiilv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgaxN2E85qwMUTrG4D5Uhhtk1dhoMs7eQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658073414013-meek5lqq97sper2kdaje3tl5hpokiilv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
