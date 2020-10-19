@@ -181,7 +181,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: new BorderSide(color: Colors.grey)),
-                            hintText: 'Street Address',
+                            hintText: '+353',
                             hintStyle:
                             TextStyle(fontSize: 14.0, color: Colors.grey),
                             labelStyle: TextStyle(color: Colors.black)),
@@ -449,7 +449,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                             _smallCount.toString() +
                                             "\nIndividual Kanafehs: " +
                                             _individualCount.toString(),
-                                      ))
+                                      ), pickedDate.month.toString())
                                       .whenComplete(() => {
                                             Navigator.push(
                                                 context,

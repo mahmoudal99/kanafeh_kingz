@@ -6,7 +6,7 @@ class CloudFirestore {
   CollectionReference _collectionReference =
       FirebaseFirestore.instance.collection('orders');
 
-  Future<bool> addOrder(Order order) async {
+  Future<bool> addOrder(Order order, String month) async {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
         .collection("orders")
@@ -26,23 +26,20 @@ class CloudFirestore {
       "orderDesc": order.orderDesc,
     });
 
-    if (_collectionReference
-            .doc("profit")
-            .collection("october")
-            .doc(order.dateTime)
-            .id ==
-        order.dateTime) {
+    DocumentSnapshot documentSnapshot = await _collectionReference.doc("profit").collection(month).doc(order.dateTime).get();
+
+    if (!documentSnapshot.exists) {
       _collectionReference
           .doc("profit")
-          .collection("october")
+          .collection(month)
           .doc(order.dateTime)
-          .update({"profit": FieldValue.increment(order.orderPrice)});
+          .set({"profit": order.orderPrice});
     } else {
       _collectionReference
           .doc("profit")
-          .collection("october")
+          .collection(month)
           .doc(order.dateTime)
-          .set({"profit": FieldValue.increment(order.orderPrice)});
+          .update({"profit": FieldValue.increment(order.orderPrice)});
     }
   }
 
@@ -57,10 +54,10 @@ class CloudFirestore {
         (list) => list.docs.map((doc) => Order.fromMap(doc.data())).toList());
   }
 
-  Stream<Profit> streamProfit(String day) {
+  Stream<Profit> streamProfit(String day, String month) {
     return _collectionReference
         .doc("profit")
-        .collection("october")
+        .collection(month)
         .doc(day)
         .snapshots()
         .map((snap) => Profit.fromMap(snap.data()));
