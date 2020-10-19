@@ -234,22 +234,37 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     ),
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10, right: 10),
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    child: Text(
-                                                      order.timeOfDay,
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.red),
+                                                Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.all(10),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          cloudFirestore.deleteOrder(order);
+                                                        },
+                                                        child: Icon(
+                                                          Icons.delete,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 10, right: 10),
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.bottomCenter,
+                                                        child: Text(
+                                                          order.timeOfDay,
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              color: Colors.red),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
