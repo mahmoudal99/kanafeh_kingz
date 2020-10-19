@@ -240,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       padding: EdgeInsets.all(10),
                                                       child: InkWell(
                                                         onTap: () {
-                                                          cloudFirestore.deleteOrder(order);
+                                                          cloudFirestore.deleteOrder(order, pickedDate.month.toString() );
                                                         },
                                                         child: Icon(
                                                           Icons.delete,

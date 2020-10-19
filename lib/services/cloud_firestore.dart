@@ -43,8 +43,16 @@ class CloudFirestore {
     }
   }
 
-  Future<bool> deleteOrder(Order order) {
+  Future<bool> deleteOrder(Order order, String month) async {
     _collectionReference.doc("N44vzFG33WQSYv6XR74W").collection("orders").doc(order.dateTime).collection("orders").doc(order.customerName).delete();
+
+    DocumentSnapshot documentSnapshot = await _collectionReference.doc("profit").collection(month).doc(order.dateTime).get();
+    _collectionReference
+        .doc("profit")
+        .collection(month)
+        .doc(order.dateTime)
+        .update({"profit": FieldValue.increment(-order.orderPrice)});
+
   }
 
   Stream<List<Order>> streamOrders(String day) {
