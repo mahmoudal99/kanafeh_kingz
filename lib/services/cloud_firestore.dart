@@ -6,6 +6,7 @@ class CloudFirestore {
   CollectionReference _collectionReference =
       FirebaseFirestore.instance.collection('orders');
 
+
   Future<bool> addOrder(Order order, String month) async {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
@@ -55,6 +56,7 @@ class CloudFirestore {
   }
 
   Stream<List<Order>> streamOrders(String day) {
+
     var ref = _collectionReference
         .doc('N44vzFG33WQSYv6XR74W')
         .collection('orders')
@@ -98,7 +100,7 @@ class CloudFirestore {
     });
   }
 
-  Future<void> updateOrderName(String id, String orderDay, String customerName) {
+  Future<void> updateValue(String id, String orderDay, String value, String field) {
     print(id);
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
@@ -107,7 +109,7 @@ class CloudFirestore {
         .collection("orders")
         .doc(id)
         .update({
-      "customerName": customerName,
+      field: value,
     });
   }
 }
