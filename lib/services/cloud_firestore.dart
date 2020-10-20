@@ -10,7 +10,7 @@ class CloudFirestore {
   Future<bool> addOrder(Order order, String month) async {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
-        .collection("orders")
+        .collection(month)
         .doc(order.dateTime)
         .collection('orders')
         .doc()
@@ -55,11 +55,11 @@ class CloudFirestore {
 
   }
 
-  Stream<List<Order>> streamOrders(String day) {
+  Stream<List<Order>> streamOrders(String day, String month) {
 
     var ref = _collectionReference
         .doc('N44vzFG33WQSYv6XR74W')
-        .collection('orders')
+        .collection(month)
         .doc(day)
         .collection('orders');
 

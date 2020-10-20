@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         StreamProvider<List<Order>>.value(
-          value: cloudFirestore.streamOrders(widget.dateTime.day.toString()),
+          value: cloudFirestore.streamOrders(widget.dateTime.day.toString(), widget.dateTime.month.toString()),
         ),
         StreamProvider<Profit>.value(
           value: cloudFirestore.streamProfit(widget.dateTime.day.toString(), widget.dateTime.month.toString()),
