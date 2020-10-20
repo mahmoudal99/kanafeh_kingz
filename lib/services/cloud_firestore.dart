@@ -12,7 +12,7 @@ class CloudFirestore {
         .collection("orders")
         .doc(order.dateTime)
         .collection('orders')
-        .doc(order.customerName)
+        .doc()
         .set({
       "customerName": order.customerName,
       "address": order.address,
@@ -44,9 +44,8 @@ class CloudFirestore {
   }
 
   Future<bool> deleteOrder(Order order, String month) async {
-    _collectionReference.doc("N44vzFG33WQSYv6XR74W").collection("orders").doc(order.dateTime).collection("orders").doc(order.customerName).delete();
+    _collectionReference.doc("N44vzFG33WQSYv6XR74W").collection("orders").doc(order.dateTime).collection("orders").doc(order.orderID).delete();
 
-    DocumentSnapshot documentSnapshot = await _collectionReference.doc("profit").collection(month).doc(order.dateTime).get();
     _collectionReference
         .doc("profit")
         .collection(month)
@@ -63,7 +62,7 @@ class CloudFirestore {
         .collection('orders');
 
     return ref.snapshots().map(
-        (list) => list.docs.map((doc) => Order.fromMap(doc.data())).toList());
+        (list) => list.docs.map((doc) => Order.fromMap(doc.data(), doc.id)).toList());
   }
 
   Stream<Profit> streamProfit(String day, String month) {
@@ -75,15 +74,40 @@ class CloudFirestore {
         .map((snap) => Profit.fromMap(snap.data()));
   }
 
-  Future<void> setOrderDone(String name, String orderDay, bool value) {
+  Future<void> setOrderDone(String id, String orderDay, bool value) {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
         .collection("orders")
         .doc(orderDay)
         .collection("orders")
-        .doc(name)
+        .doc(id)
         .update({
       "orderComplete": value,
+    });
+  }
+
+  Future<void> updateOrderTime(String id, String orderDay, String time) {
+    _collectionReference
+        .doc("N44vzFG33WQSYv6XR74W")
+        .collection("orders")
+        .doc(orderDay)
+        .collection("orders")
+        .doc(id)
+        .update({
+      "timeOfDay": time,
+    });
+  }
+
+  Future<void> updateOrderName(String id, String orderDay, String customerName) {
+    print(id);
+    _collectionReference
+        .doc("N44vzFG33WQSYv6XR74W")
+        .collection("orders")
+        .doc(orderDay)
+        .collection("orders")
+        .doc(id)
+        .update({
+      "customerName": customerName,
     });
   }
 }

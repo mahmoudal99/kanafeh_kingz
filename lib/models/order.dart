@@ -26,10 +26,10 @@ class Order {
       this.paymentType,
       this.orderDesc});
 
-  factory Order.fromMap(Map data) {
+  factory Order.fromMap(Map data, String id) {
     data = data ?? {};
     return Order(
-      orderID: data['orderID'],
+      orderID: id,
       customerName: data['customerName'],
       phoneNumber: data['phoneNumber'],
       address: data['address'],
