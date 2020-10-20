@@ -45,7 +45,7 @@ class CloudFirestore {
   }
 
   Future<bool> deleteOrder(Order order, String month) async {
-    _collectionReference.doc("N44vzFG33WQSYv6XR74W").collection("orders").doc(order.dateTime).collection("orders").doc(order.orderID).delete();
+    _collectionReference.doc("N44vzFG33WQSYv6XR74W").collection(month).doc(order.dateTime).collection("orders").doc(order.orderID).delete();
 
     _collectionReference
         .doc("profit")
@@ -76,10 +76,10 @@ class CloudFirestore {
         .map((snap) => Profit.fromMap(snap.data()));
   }
 
-  Future<void> setOrderDone(String id, String orderDay, bool value) {
+  Future<void> setOrderDone(String id, String orderDay, bool value, String month) {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
-        .collection("orders")
+        .collection(month)
         .doc(orderDay)
         .collection("orders")
         .doc(id)
@@ -88,10 +88,10 @@ class CloudFirestore {
     });
   }
 
-  Future<void> updateOrderTime(String id, String orderDay, String time) {
+  Future<void> updateOrderTime(String id, String orderDay, String month, String time) {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
-        .collection("orders")
+        .collection(month)
         .doc(orderDay)
         .collection("orders")
         .doc(id)
@@ -100,11 +100,11 @@ class CloudFirestore {
     });
   }
 
-  Future<void> updateValue(String id, String orderDay, String value, String field) {
+  Future<void> updateValue(String id, String orderDay, String month, String value, String field) {
     print(id);
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
-        .collection("orders")
+        .collection(month)
         .doc(orderDay)
         .collection("orders")
         .doc(id)

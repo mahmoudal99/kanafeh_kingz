@@ -539,7 +539,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 cloudFirestore.setOrderDone(
                                                     order.orderID,
                                                     widget.orderDate.day.toString(),
-                                                    val);
+                                                    val, widget.orderDate.month.toString());
                                                 order.orderComplete = val;
                                               },
                                             ),
@@ -600,7 +600,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         print("New: " + timeOfDay.toString());
       });
-      cloudFirestore.updateOrderTime(id, widget.orderDate.day.toString(),
+      cloudFirestore.updateOrderTime(id, widget.orderDate.day.toString(), widget.orderDate.month.toString(),
           timeOfDay.hour.toString() + ":" + timeOfDay.minute.toString());
     }
   }
@@ -633,7 +633,7 @@ class _MyHomePageState extends State<MyHomePage> {
             new FlatButton(
                 child: const Text('UPDATE'),
                 onPressed: () {
-                  cloudFirestore.updateValue(id, widget.orderDate.day.toString(),
+                  cloudFirestore.updateValue(id, widget.orderDate.day.toString(), widget.orderDate.month.toString(),
                       textEditingController.text, field);
 
                 })
