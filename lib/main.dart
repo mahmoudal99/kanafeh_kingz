@@ -170,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
           tooltip: 'Increment',
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CreateOrderScreen()));
+                MaterialPageRoute(builder: (context) => CreateOrderScreen(dateTime: widget.orderDate,)));
           },
           child: Icon(
             Icons.add,

@@ -7,6 +7,11 @@ import 'package:kanafeh_kings/services/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
 class CreateOrderScreen extends StatefulWidget {
+
+  DateTime dateTime;
+
+  CreateOrderScreen({this.dateTime});
+
   @override
   _CreateOrderScreenState createState() => _CreateOrderScreenState();
 }
@@ -436,7 +441,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                         timeOfDay: time.hour.toString() +
                                             ":" +
                                             time.minute.toString(),
-                                        dateTime: pickedDate.day.toString(),
+                                        dateTime: widget.dateTime.day.toString(),
                                         isPaid: isPaid,
                                         orderPrice: _orderTotal,
                                         paymentType: _paymentIndex == 1
@@ -449,14 +454,14 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                             _smallCount.toString() +
                                             "\nIndividual Kanafehs: " +
                                             _individualCount.toString(),
-                                      ), pickedDate.month.toString())
+                                      ), widget.dateTime.month.toString())
                                       .whenComplete(() => {
                                             Navigator.push(
                                                 context,
                                                 PageTransition(
                                                     type: PageTransitionType
                                                         .rightToLeft,
-                                                    child: MyApp(dateTime: new DateTime.now(),),
+                                                    child: MyApp(dateTime: widget.dateTime,),
                                                     inheritTheme: false,
                                                     duration: Duration(
                                                         milliseconds: 450),
@@ -482,13 +487,13 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
   _pickDate() async {
     DateTime dateTime = await showDatePicker(
         context: context,
-        initialDate: pickedDate,
+        initialDate: widget.dateTime,
         firstDate: DateTime(DateTime.now().year - 5),
         lastDate: DateTime(DateTime.now().year + 5));
 
     if (dateTime != null) {
       setState(() {
-        pickedDate = dateTime;
+        widget.dateTime = dateTime;
       });
     }
   }
