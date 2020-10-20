@@ -456,7 +456,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                                 PageTransition(
                                                     type: PageTransitionType
                                                         .rightToLeft,
-                                                    child: MyHomePage(),
+                                                    child: MyApp(dateTime: new DateTime.now(),),
                                                     inheritTheme: false,
                                                     duration: Duration(
                                                         milliseconds: 450),
