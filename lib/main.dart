@@ -101,6 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
   double checkBoxScale = 0.8;
   bool showOrderDesc = false;
   double textSize = 16;
+  double orderTextSize = 16;
+  double addressTextSize = 16;
   double orderCompleteText = 10;
   double paddingForOrderComplete = 1;
 
@@ -160,6 +162,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     checkBoxScale = 1.2;
                     iconSize = 30.00;
                     textSize = 20;
+                    addressTextSize = 17;
+                    orderTextSize = 17;
                     paddingForOrderComplete = 30;
                     orderCompleteText = 15;
                   });
@@ -384,20 +388,23 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         size: iconSize,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10),
-                                                      child: SelectableText(
-                                                        order.address,
-                                                        onTap: () {
-                                                          _updateValue(
-                                                              order.orderID,
-                                                              "address",
-                                                              "e.g. Dublin 24");
-                                                        },
-                                                        style: TextStyle(
-                                                            fontSize: textSize),
+                                                    Container(
+                                                      width: 250,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                left: 10),
+                                                        child: SelectableText(
+                                                          order.address,
+                                                          onTap: () {
+                                                            _updateValue(
+                                                                order.orderID,
+                                                                "address",
+                                                                "e.g. Dublin 24");
+                                                          },
+                                                          style: TextStyle(
+                                                              fontSize: addressTextSize),
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -412,7 +419,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 child: SelectableText(
                                                   order.orderDesc,
                                                   style: TextStyle(
-                                                      fontSize: textSize),
+                                                      fontSize: orderTextSize
+                                                  ),
                                                 ),
                                               ),
                                             ),
