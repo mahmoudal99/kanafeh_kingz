@@ -14,14 +14,18 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   DateTime dateTime = DateTime.now();
-  runApp(MyApp(dateTime: dateTime,));
+  runApp(MyApp(
+    dateTime: dateTime,
+  ));
 }
 
 class MyApp extends StatefulWidget {
-
   DateTime dateTime;
 
-  MyApp({Key key, this.dateTime,}) : super(key: key);
+  MyApp({
+    Key key,
+    this.dateTime,
+  }) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -51,10 +55,12 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         StreamProvider<List<Order>>.value(
-          value: cloudFirestore.streamOrders(widget.dateTime.day.toString(), widget.dateTime.month.toString()),
+          value: cloudFirestore.streamOrders(
+              widget.dateTime.day.toString(), widget.dateTime.month.toString()),
         ),
         StreamProvider<Profit>.value(
-          value: cloudFirestore.streamProfit(widget.dateTime.day.toString(), widget.dateTime.month.toString()),
+          value: cloudFirestore.streamProfit(
+              widget.dateTime.day.toString(), widget.dateTime.month.toString()),
         )
       ],
       child: MaterialApp(
@@ -74,10 +80,9 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-
   DateTime orderDate;
 
-  MyHomePage({Key key, this.title, this.orderDate }) : super(key: key);
+  MyHomePage({Key key, this.title, this.orderDate}) : super(key: key);
 
   final String title;
 
@@ -169,8 +174,12 @@ class _MyHomePageState extends State<MyHomePage> {
         floatingActionButton: FloatingActionButton(
           tooltip: 'Increment',
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CreateOrderScreen(dateTime: widget.orderDate,)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CreateOrderScreen(
+                          dateTime: widget.orderDate,
+                        )));
           },
           child: Icon(
             Icons.add,
@@ -248,7 +257,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               "/" +
                               widget.orderDate.month.toString(),
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.green),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.green),
                         )),
                     Padding(
                       padding: EdgeInsets.only(top: 15, right: 15),
@@ -400,8 +411,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     top: 20),
                                                 child: SelectableText(
                                                   order.orderDesc,
-                                                  style:
-                                                      TextStyle(fontSize: textSize),
+                                                  style: TextStyle(
+                                                      fontSize: textSize),
                                                 ),
                                               ),
                                             ),
@@ -439,12 +450,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   children: [
                                                     InkWell(
                                                       onTap: () {
-                                                        _launchCaller(order
-                                                            .phoneNumber);
+                                                        _launchCaller(
+                                                            order.phoneNumber);
                                                       },
                                                       child: Padding(
-                                                        padding: EdgeInsets.only(
-                                                            left: 10),
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 10),
                                                         child: Icon(
                                                           Icons.phone,
                                                           color:
@@ -459,7 +471,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                                               left: 10),
                                                       child: InkWell(
                                                           onTap: () async {
-                                                            _updateValue(order.orderID, "phoneNumber", "e.g. 089 494 5632");
+                                                            _updateValue(
+                                                                order.orderID,
+                                                                "phoneNumber",
+                                                                "e.g. 089 494 5632");
                                                           },
                                                           child: Text(
                                                             order.phoneNumber,
@@ -538,8 +553,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                               onChanged: (val) {
                                                 cloudFirestore.setOrderDone(
                                                     order.orderID,
-                                                    widget.orderDate.day.toString(),
-                                                    val, widget.orderDate.month.toString());
+                                                    widget.orderDate.day
+                                                        .toString(),
+                                                    val,
+                                                    widget.orderDate.month
+                                                        .toString());
                                                 order.orderComplete = val;
                                               },
                                             ),
@@ -584,11 +602,14 @@ class _MyHomePageState extends State<MyHomePage> {
         lastDate: DateTime(DateTime.now().year + 5));
 
     if (dateTime != null) {
-
-      Future.delayed(Duration.zero,() {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp(dateTime: dateTime,)));
+      Future.delayed(Duration.zero, () {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MyApp(
+                      dateTime: dateTime,
+                    )));
       });
-
     }
   }
 
@@ -600,7 +621,10 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         print("New: " + timeOfDay.toString());
       });
-      cloudFirestore.updateOrderTime(id, widget.orderDate.day.toString(), widget.orderDate.month.toString(),
+      cloudFirestore.updateOrderTime(
+          id,
+          widget.orderDate.day.toString(),
+          widget.orderDate.month.toString(),
           timeOfDay.hour.toString() + ":" + timeOfDay.minute.toString());
     }
   }
@@ -626,16 +650,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           actions: <Widget>[
             new FlatButton(
-                child: const Text('CLOSE'),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            new FlatButton(
                 child: const Text('UPDATE'),
                 onPressed: () {
-                  cloudFirestore.updateValue(id, widget.orderDate.day.toString(), widget.orderDate.month.toString(),
-                      textEditingController.text, field);
-
+                  cloudFirestore.updateValue(
+                      id,
+                      widget.orderDate.day.toString(),
+                      widget.orderDate.month.toString(),
+                      textEditingController.text,
+                      field);
                 })
           ],
         ));
