@@ -431,6 +431,10 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                               color: Colors.orange,
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
+
+                                  String orderTime = time.toString();
+                                  orderTime = orderTime.replaceAll(RegExp('TimeOfDay'), '');
+                                  orderTime = orderTime.replaceAll(RegExp("[\\[\\](){}]"),"");
                                   dynamic result = await cloudFirestore
                                       .addOrder(new Order(
                                         customerName:
@@ -438,9 +442,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                         address:
                                             _addressController.text.toString(),
                                         phoneNumber: _phoneController.text.toString(),
-                                        timeOfDay: time.hour.toString() +
-                                            ":" +
-                                            time.minute.toString(),
+                                        timeOfDay: orderTime,
                                         dateTime: widget.dateTime.day.toString(),
                                         isPaid: isPaid,
                                         orderPrice: _orderTotal,
