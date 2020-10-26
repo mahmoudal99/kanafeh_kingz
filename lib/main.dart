@@ -222,10 +222,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       )),
                   Padding(
                     padding: EdgeInsets.all(20),
-                    child: InkWell(
-                      onTap: () {
+                    child: RaisedButton(
+                      onPressed: () {
                         _pickDate();
                       },
+                      elevation: 5,
                       child: Icon(
                         Icons.calendar_today,
                         size: iconSize,
