@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>658073414013-ksr00o9vn7blrumn355g3hicmo7asnvf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.658073414013-ksr00o9vn7blrumn355g3hicmo7asnvf</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>658073414013-04a7l93bpv3mq56ogih6b8svdje51kbu.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBZ6TXouYMevM-xqd447nG3S0J0hNPOAQQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>658073414013</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kanafeh.kanafehKings</string>
+	<key>PROJECT_ID</key>
+	<string>kanafeh-kings</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kanafeh-kings.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:658073414013:ios:247581315aa4b83ca40414</string>
+	<key>DATABASE_URL</key>
+	<string>https://kanafeh-kings.firebaseio.com</string>
+</dict>
+</plist>

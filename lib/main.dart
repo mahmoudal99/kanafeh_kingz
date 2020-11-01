@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: MaterialApp(
-        title: 'Kanafeh Kings',
+        title: 'Kanafeh Kingz',
         theme: ThemeData(
           primarySwatch: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -131,10 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (orders != null) {
       return Scaffold(
+        backgroundColor: Colors.white,
         resizeToAvoidBottomPadding: true,
         appBar: AppBar(
           title: Text(
-            'Kanafeh Kings',
+            'Kanafeh Kingz',
             style: TextStyle(color: Colors.white, fontSize: titleSize),
           ),
           elevation: 15,
@@ -221,12 +222,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.green),
                       )),
                   Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.only(top: 5),
                     child: RaisedButton(
                       onPressed: () {
                         _pickDate();
                       },
-                      elevation: 5,
+                      color: Colors.white,
+                      elevation: 0,
                       child: Icon(
                         Icons.calendar_today,
                         size: iconSize,
@@ -267,11 +269,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Colors.green),
                         )),
                     Padding(
-                      padding: EdgeInsets.only(top: 15, right: 15),
-                      child: InkWell(
-                        onTap: () {
+                      padding: EdgeInsets.only(top: 5),
+                      child: RaisedButton(
+                        onPressed: () {
                           _pickDate();
                         },
+                        color: Colors.white,
+                        elevation: 0,
                         child: Icon(
                           Icons.calendar_today,
                           size: iconSize,
@@ -296,252 +300,263 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, top: 10, bottom: 20),
-                                  child: Card(
-                                    elevation: 10,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        // Name & Time
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                _updateValue(
-                                                    order.orderID,
-                                                    "customerName",
-                                                    "e.g. John Smith");
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10, left: 20),
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  child: Text(
-                                                    order.customerName,
-                                                    style: TextStyle(
-                                                        fontSize: textSize,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.black),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                _updateTime(order.orderID);
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: 10,
-                                                ),
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  child: Text(
-                                                    order.timeOfDay,
-                                                    style: TextStyle(
-                                                        fontSize: textSize,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.red),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 15, right: 10, left: 20),
-                                              child: InkWell(
+                                  child: InkWell(
+                                    onTap: () {
+                                      showDialog(context: context, child:
+                                      new AlertDialog(
+                                        title: new Text("Order"),
+                                        content: new Text(order.orderDesc),
+                                      )
+                                      );
+                                    },
+                                    child: Card(
+                                      elevation: 10,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          // Name & Time
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              InkWell(
                                                 onTap: () {
-                                                  cloudFirestore.deleteOrder(
-                                                      order,
-                                                      widget.orderDate.month
-                                                          .toString());
+                                                  _updateValue(
+                                                      order.orderID,
+                                                      "customerName",
+                                                      "e.g. John Smith");
                                                 },
-                                                child: Icon(
-                                                  Icons.delete,
-                                                  size: iconSize,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 10, left: 20),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: Text(
+                                                      order.customerName,
+                                                      style: TextStyle(
+                                                          fontSize: textSize,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        // Location & Payment Type
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 10),
-                                                      child: Icon(
-                                                        Icons.location_on,
-                                                        color: Colors.teal,
-                                                        size: iconSize,
-                                                      ),
+                                              InkWell(
+                                                onTap: () {
+                                                  _updateTime(order.orderID);
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                    top: 10,
+                                                  ),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: Text(
+                                                      order.timeOfDay,
+                                                      style: TextStyle(
+                                                          fontSize: textSize,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.red),
                                                     ),
-                                                    Container(
-                                                      width: 250,
-                                                      child: Padding(
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 15, right: 10, left: 20),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    cloudFirestore.deleteOrder(
+                                                        order,
+                                                        widget.orderDate.month
+                                                            .toString());
+                                                  },
+                                                  child: Icon(
+                                                    Icons.delete,
+                                                    size: iconSize,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Location & Payment Type
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.only(
+                                                            left: 10),
+                                                        child: Icon(
+                                                          Icons.location_on,
+                                                          color: Colors.teal,
+                                                          size: iconSize,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        width: 200,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets.only(
+                                                                  left: 10),
+                                                          child: SelectableText(
+                                                            order.address,
+                                                            maxLines: 2,
+                                                            onTap: () {
+                                                              _updateValue(
+                                                                  order.orderID,
+                                                                  "address",
+                                                                  "e.g. Dublin 24");
+                                                            },
+                                                            style: TextStyle(
+                                                                fontSize: addressTextSize),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              Visibility(
+                                                visible: showOrderDesc,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 20),
+                                                  child: SelectableText(
+                                                    order.orderDesc,
+                                                    style: TextStyle(
+                                                        fontSize: orderTextSize
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 20,
+                                                    top: 20,
+                                                    right: 10),
+                                                child: Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: order.paymentType
+                                                            .contains("Cash")
+                                                        ? Image.asset(
+                                                            "assets/cash.png",
+                                                            height: 35,
+                                                            width: 35,
+                                                          )
+                                                        : Icon(
+                                                            Icons.credit_card,
+                                                            color: Colors.black,
+                                                            size: iconSize,
+                                                          )),
+                                              ),
+                                            ],
+                                          ),
+                                          // Number & Order Total
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          _launchCaller(
+                                                              order.phoneNumber);
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 10),
+                                                          child: Icon(
+                                                            Icons.phone,
+                                                            color:
+                                                                Colors.blueAccent,
+                                                            size: iconSize,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
                                                         padding:
                                                             const EdgeInsets.only(
                                                                 left: 10),
-                                                        child: SelectableText(
-                                                          order.address,
-                                                          onTap: () {
-                                                            _updateValue(
-                                                                order.orderID,
-                                                                "address",
-                                                                "e.g. Dublin 24");
-                                                          },
-                                                          style: TextStyle(
-                                                              fontSize: addressTextSize),
-                                                        ),
+                                                        child: InkWell(
+                                                            onTap: () async {
+                                                              _updateValue(
+                                                                  order.orderID,
+                                                                  "phoneNumber",
+                                                                  "e.g. 089 494 5632");
+                                                            },
+                                                            child: Text(
+                                                              order.phoneNumber,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      textSize),
+                                                            )),
                                                       ),
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                            Visibility(
-                                              visible: showOrderDesc,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 20),
-                                                child: SelectableText(
-                                                  order.orderDesc,
-                                                  style: TextStyle(
-                                                      fontSize: orderTextSize
-                                                  ),
-                                                ),
+                                                    ],
+                                                  )
+                                                ],
                                               ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 20,
-                                                  top: 20,
-                                                  right: 10),
-                                              child: Align(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  child: order.paymentType
-                                                          .contains("Cash")
-                                                      ? Image.asset(
-                                                          "assets/cash.png",
-                                                          height: 35,
-                                                          width: 35,
-                                                        )
-                                                      : Icon(
-                                                          Icons.credit_card,
-                                                          color: Colors.black,
-                                                          size: iconSize,
-                                                        )),
-                                            ),
-                                          ],
-                                        ),
-                                        // Number & Order Total
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        _launchCaller(
-                                                            order.phoneNumber);
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 10),
-                                                        child: Icon(
-                                                          Icons.phone,
-                                                          color:
-                                                              Colors.blueAccent,
-                                                          size: iconSize,
-                                                        ),
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 5,
+                                                            top: 10,
+                                                            right: 10),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.bottomCenter,
+                                                      child: Text(
+                                                        "Order Total",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                textSize - 2,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.green),
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10),
-                                                      child: InkWell(
-                                                          onTap: () async {
-                                                            _updateValue(
-                                                                order.orderID,
-                                                                "phoneNumber",
-                                                                "e.g. 089 494 5632");
-                                                          },
-                                                          child: Text(
-                                                            order.phoneNumber,
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    textSize),
-                                                          )),
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 5,
-                                                          top: 10,
-                                                          right: 10),
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    child: Text(
-                                                      "Order Total",
-                                                      style: TextStyle(
-                                                          fontSize:
-                                                              textSize - 2,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.green),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 20,
+                                                            right: 10),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.bottomCenter,
+                                                      child: Text(
+                                                        "€" +
+                                                            order.orderPrice
+                                                                .toString(),
+                                                        style: TextStyle(
+                                                            fontSize: textSize,
+                                                            fontWeight: FontWeight
+                                                                .normal),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 20,
-                                                          right: 10),
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    child: Text(
-                                                      "€" +
-                                                          order.orderPrice
-                                                              .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: textSize,
-                                                          fontWeight: FontWeight
-                                                              .normal),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      ],
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -623,8 +638,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _updateTime(String id) async {
-    TimeOfDay timeOfDay =
-        await showTimePicker(context: context, initialTime: time);
+    TimeOfDay timeOfDay = await showTimePicker(context: context, initialTime: time);
 
     if (timeOfDay != null) {
       setState(() {
@@ -669,6 +683,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       field);
                 })
           ],
-        ));
+        )
+    );
   }
 }
