@@ -172,11 +172,12 @@ class CloudFirestore {
             .toList());
   }
 
-  Stream<MonthlyIncome> streamMonthlyIncome(String month) {
+  Stream<MonthlyIncome> streamMonthlyIncome() {
+    DateTime _dateTime  = DateTime.now();
     return _collectionReference
         .doc("income")
         .collection("months")
-        .doc(month)
+        .doc(_dateTime.month.toString())
         .snapshots()
         .map((snap) => MonthlyIncome.fromMap(snap.data()));
   }

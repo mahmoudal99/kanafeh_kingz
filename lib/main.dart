@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
         ),
         StreamProvider<MonthlyIncome>.value(
           value: cloudFirestore
-              .streamMonthlyIncome(widget.dateTime.month.toString()),
+              .streamMonthlyIncome(),
         ),
       ],
       child: MaterialApp(
