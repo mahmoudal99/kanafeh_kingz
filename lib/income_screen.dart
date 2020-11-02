@@ -43,7 +43,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
         onTap: onTabTapped,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
         selectedFontSize: 12.0,
         currentIndex: _currentIndex,

@@ -152,11 +152,12 @@ class CloudFirestore {
         .map((snap) => Profit.fromMap(snap.data()));
   }
 
-  Stream<WeeklyIncome> streamWeeklyIncome(String weekNumber) {
+  Stream<WeeklyIncome> streamWeeklyIncome() {
+    DateTime _dateTime  = DateTime.now();
     return _collectionReference
         .doc("income")
         .collection("weeks")
-        .doc(weekNumber)
+        .doc(Jiffy([_dateTime.year, _dateTime.month, _dateTime.day]).week.toString())
         .snapshots()
         .map((snap) => WeeklyIncome.fromMap(snap.data()));
   }

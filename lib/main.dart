@@ -73,11 +73,7 @@ class _MyAppState extends State<MyApp> {
           value: cloudFirestore.streamAllMonths(),
         ),
         StreamProvider<WeeklyIncome>.value(
-          value: cloudFirestore.streamWeeklyIncome(Jiffy([
-            widget.dateTime.year,
-            widget.dateTime.month,
-            widget.dateTime.day
-          ]).week.toString()),
+          value: cloudFirestore.streamWeeklyIncome(),
         ),
         StreamProvider<MonthlyIncome>.value(
           value: cloudFirestore

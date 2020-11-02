@@ -18,6 +18,7 @@ class WeekIncome extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: 150,
             child: Card(
+              color: Colors.blue,
               margin: EdgeInsets.all(20),
               elevation: 10,
               shape: RoundedRectangleBorder(
@@ -30,11 +31,12 @@ class WeekIncome extends StatelessWidget {
                     "Week Income",
                     style: TextStyle(
                       fontSize: 20,
+                      color: Colors.white
                     ),
                   ),
                   Text(
                     "€" + weeklyIncome.profit,
-                    style: TextStyle(color: Colors.green, fontSize: 26),
+                    style: TextStyle(color: Colors.white, fontSize: 26),
                   )
                 ],
               ),
@@ -62,11 +64,11 @@ class WeekIncome extends StatelessWidget {
                           children: [
                             Text(
                               "Week " + week.week,
-                              style: TextStyle(color: Colors.black, fontSize: 20),
+                              style: TextStyle(color: Colors.black, fontSize: 18),
                             ),
                             Text(
                               "€" + week.profit,
-                              style: TextStyle(color: Colors.green, fontSize: 20),
+                              style: TextStyle(color: Colors.green, fontSize: 18),
                             ),
                           ],
                         ),

@@ -19,6 +19,7 @@ class MonthIncome extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: 150,
             child: Card(
+              color: Colors.blue,
               margin: EdgeInsets.all(20),
               elevation: 10,
               shape: RoundedRectangleBorder(
@@ -31,11 +32,12 @@ class MonthIncome extends StatelessWidget {
                     "Month Income",
                     style: TextStyle(
                       fontSize: 20,
+                      color: Colors.white
                     ),
                   ),
                   Text(
                     "€" + monthlyIncome.profit,
-                    style: TextStyle(color: Colors.green, fontSize: 26),
+                    style: TextStyle(color: Colors.white, fontSize: 26),
                   )
                 ],
               ),
