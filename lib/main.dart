@@ -168,16 +168,17 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(10.0),
               child: Center(
                   child: RaisedButton(
-                    color: Colors.orange,
-                    elevation: 0,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => IncomeScreen()));
-                    },
-                    child: Text("Income", style: TextStyle(color: Colors.white),),
-                  )),
+                color: Colors.orange,
+                elevation: 0,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => IncomeScreen()));
+                },
+                child: Text(
+                  "Income",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )),
             )
           ],
         ),
@@ -216,7 +217,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     builder: (context) => CreateOrderScreen(
                           dateTime: widget.orderDate,
                         )));
-
           },
           child: Icon(
             Icons.add,
