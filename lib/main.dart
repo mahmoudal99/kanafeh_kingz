@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TimeOfDay time;
   CloudFirestore cloudFirestore = new CloudFirestore();
-  double titleSize = 20;
+  double titleSize = 16;
   int mainWidgetWidthScale = 50;
   double iconSize = 22;
   double checkBoxScale = 0.8;
@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(
             'Kanafeh Kings',
-            style: TextStyle(color: Colors.white, fontSize: titleSize),
+            style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           elevation: 15,
           actions: [
@@ -165,8 +165,23 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                   child: Text(
                 "Total: " + profit.profit,
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: TextStyle(color: Colors.white, fontSize: 16),
               )),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Center(
+                  child: RaisedButton(
+                    color: Colors.orange,
+                    elevation: 0,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => IncomeScreen()));
+                    },
+                    child: Text("Income", style: TextStyle(color: Colors.white),),
+                  )),
             )
           ],
         ),
@@ -199,16 +214,13 @@ class _MyHomePageState extends State<MyHomePage> {
         floatingActionButton: FloatingActionButton(
           tooltip: 'Increment',
           onPressed: () {
-//            Navigator.push(
-//                context,
-//                MaterialPageRoute(
-//                    builder: (context) => CreateOrderScreen(
-//                          dateTime: widget.orderDate,
-//                        )));
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => IncomeScreen()));
+                    builder: (context) => CreateOrderScreen(
+                          dateTime: widget.orderDate,
+                        )));
+
           },
           child: Icon(
             Icons.add,

@@ -31,6 +31,8 @@ class _IncomeScreenState extends State<IncomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
         title: Text(
           'Income',
           style: TextStyle(color: Colors.white),
@@ -41,14 +43,14 @@ class _IncomeScreenState extends State<IncomeScreen> {
         onTap: onTabTapped,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.black,
+        selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.black,
         selectedFontSize: 12.0,
         currentIndex: _currentIndex,
         elevation: 10.0,
         items: [
-          new BottomNavigationBarItem(icon: Icon(Icons.looks_one, size: 20.0), title: Text("Week Income"),),
-          new BottomNavigationBarItem(icon: Icon(Icons.looks_two, size: 20.0), title: Text("Month Income"),)
+          new BottomNavigationBarItem(icon: Icon(Icons.attach_money, size: 20.0), title: Text("Week Income"),),
+          new BottomNavigationBarItem(icon: Icon(Icons.attach_money, size: 20.0), title: Text("Month Income"),)
         ],
       ),
       body: _children[_currentIndex],
