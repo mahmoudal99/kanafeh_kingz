@@ -1,13 +1,15 @@
+import 'package:jiffy/jiffy.dart';
+import 'package:kanafeh_kings/models/monthly_income.dart';
 import 'package:kanafeh_kings/models/order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kanafeh_kings/models/profit.dart';
+import 'package:kanafeh_kings/models/weekly_income.dart';
 
 class CloudFirestore {
   CollectionReference _collectionReference =
       FirebaseFirestore.instance.collection('orders');
 
-
-  Future<bool> addOrder(Order order, String month) async {
+  Future<bool> addOrder(Order order, String month, DateTime dateTime) async {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
         .collection(month)
@@ -27,7 +29,11 @@ class CloudFirestore {
       "orderDesc": order.orderDesc,
     });
 
-    DocumentSnapshot documentSnapshot = await _collectionReference.doc("profit").collection(month).doc(order.dateTime).get();
+    DocumentSnapshot documentSnapshot = await _collectionReference
+        .doc("profit")
+        .collection(month)
+        .doc(order.dateTime)
+        .get();
 
     if (!documentSnapshot.exists) {
       _collectionReference
@@ -42,10 +48,41 @@ class CloudFirestore {
           .doc(order.dateTime)
           .update({"profit": FieldValue.increment(order.orderPrice)});
     }
+
+
+    documentSnapshot = await _collectionReference
+        .doc("income")
+        .collection('weeks')
+        .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day]).week.toString())
+        .get();
+
+    if (!documentSnapshot.exists) {
+      print("Creating new income week");
+
+
+      _collectionReference
+          .doc("income")
+          .collection('weeks')
+          .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day]).week.toString())
+          .set({"income": order.orderPrice});
+    } else {
+      _collectionReference
+          .doc("income")
+          .collection('weeks')
+          .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day]).week.toString())
+          .update({"income": FieldValue.increment(order.orderPrice)});
+    }
   }
 
-  Future<bool> deleteOrder(Order order, String month) async {
-    _collectionReference.doc("N44vzFG33WQSYv6XR74W").collection(month).doc(order.dateTime).collection("orders").doc(order.orderID).delete();
+
+  Future<bool> deleteOrder(Order order, String month, DateTime dateTime) async {
+    _collectionReference
+        .doc("N44vzFG33WQSYv6XR74W")
+        .collection(month)
+        .doc(order.dateTime)
+        .collection("orders")
+        .doc(order.orderID)
+        .delete();
 
     _collectionReference
         .doc("profit")
@@ -53,18 +90,24 @@ class CloudFirestore {
         .doc(order.dateTime)
         .update({"profit": FieldValue.increment(-order.orderPrice)});
 
+
+    _collectionReference
+        .doc("income")
+        .collection('weeks')
+        .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day]).week.toString())
+        .update({"income": FieldValue.increment(-order.orderPrice)});
+
   }
 
   Stream<List<Order>> streamOrders(String day, String month) {
-
     var ref = _collectionReference
         .doc('N44vzFG33WQSYv6XR74W')
         .collection(month)
         .doc(day)
         .collection('orders');
 
-    return ref.snapshots().map(
-        (list) => list.docs.map((doc) => Order.fromMap(doc.data(), doc.id)).toList());
+    return ref.snapshots().map((list) =>
+        list.docs.map((doc) => Order.fromMap(doc.data(), doc.id)).toList());
   }
 
   Stream<Profit> streamProfit(String day, String month) {
@@ -76,7 +119,26 @@ class CloudFirestore {
         .map((snap) => Profit.fromMap(snap.data()));
   }
 
-  Future<void> setOrderDone(String id, String orderDay, bool value, String month) {
+  Stream<WeeklyIncome> streamWeeklyIncome(String day, String weekNumber) {
+    return _collectionReference
+        .doc("income")
+        .collection(weekNumber)
+        .doc(day)
+        .snapshots()
+        .map((snap) => WeeklyIncome.fromMap(snap.data()));
+  }
+
+  Stream<MonthlyIncome> streamMonthlyIncome(String day, String month) {
+    return _collectionReference
+        .doc("income")
+        .collection(month)
+        .doc(day)
+        .snapshots()
+        .map((snap) => MonthlyIncome.fromMap(snap.data()));
+  }
+
+  Future<void> setOrderDone(
+      String id, String orderDay, bool value, String month) {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
         .collection(month)
@@ -88,7 +150,8 @@ class CloudFirestore {
     });
   }
 
-  Future<void> updateOrderTime(String id, String orderDay, String month, String time) {
+  Future<void> updateOrderTime(
+      String id, String orderDay, String month, String time) {
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")
         .collection(month)
@@ -100,7 +163,8 @@ class CloudFirestore {
     });
   }
 
-  Future<void> updateValue(String id, String orderDay, String month, String value, String field) {
+  Future<void> updateValue(
+      String id, String orderDay, String month, String value, String field) {
     print(id);
     _collectionReference
         .doc("N44vzFG33WQSYv6XR74W")

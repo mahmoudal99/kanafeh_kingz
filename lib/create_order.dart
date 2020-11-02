@@ -456,7 +456,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                             _smallCount.toString() +
                                             "\nIndividual Kanafehs: " +
                                             _individualCount.toString(),
-                                      ), widget.dateTime.month.toString())
+                                      ), widget.dateTime.month.toString(), widget.dateTime)
                                       .whenComplete(() => {
                                             Navigator.push(
                                                 context,

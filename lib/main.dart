@@ -361,7 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   cloudFirestore.deleteOrder(
                                                       order,
                                                       widget.orderDate.month
-                                                          .toString());
+                                                          .toString(), widget.orderDate);
                                                 },
                                                 child: Icon(
                                                   Icons.delete,
