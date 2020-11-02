@@ -67,7 +67,7 @@ class CloudFirestore {
           .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day])
               .week
               .toString())
-          .set({"income": order.orderPrice});
+          .set({"income": order.orderPrice, "week" : Jiffy([dateTime.year, dateTime.month, dateTime.day]).week.toString()});
     } else {
       _collectionReference
           .doc("income")
@@ -92,7 +92,7 @@ class CloudFirestore {
           .doc("income")
           .collection('months')
           .doc(dateTime.month.toString())
-          .set({"income": order.orderPrice});
+          .set({"income": order.orderPrice, "month" : dateTime.month});
     } else {
       _collectionReference
           .doc("income")
@@ -180,7 +180,7 @@ class CloudFirestore {
         .map((snap) => MonthlyIncome.fromMap(snap.data()));
   }
 
-  Stream<List<MonthlyIncome>> streamAllMonths(String day, String weekNumber) {
+  Stream<List<MonthlyIncome>> streamAllMonths() {
     return _collectionReference
         .doc("income")
         .collection("months")

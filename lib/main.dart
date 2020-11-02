@@ -2,8 +2,12 @@ import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:kanafeh_kings/create_order.dart';
+import 'package:kanafeh_kings/income_screen.dart';
+import 'package:kanafeh_kings/models/monthly_income.dart';
 import 'package:kanafeh_kings/models/profit.dart';
+import 'package:kanafeh_kings/models/weekly_income.dart';
 import 'package:kanafeh_kings/services/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -61,7 +65,24 @@ class _MyAppState extends State<MyApp> {
         StreamProvider<Profit>.value(
           value: cloudFirestore.streamProfit(
               widget.dateTime.day.toString(), widget.dateTime.month.toString()),
-        )
+        ),
+        StreamProvider<List<WeeklyIncome>>.value(
+          value: cloudFirestore.streamAllWeeks(),
+        ),
+        StreamProvider<List<MonthlyIncome>>.value(
+          value: cloudFirestore.streamAllMonths(),
+        ),
+        StreamProvider<WeeklyIncome>.value(
+          value: cloudFirestore.streamWeeklyIncome(Jiffy([
+            widget.dateTime.year,
+            widget.dateTime.month,
+            widget.dateTime.day
+          ]).week.toString()),
+        ),
+        StreamProvider<MonthlyIncome>.value(
+          value: cloudFirestore
+              .streamMonthlyIncome(widget.dateTime.month.toString()),
+        ),
       ],
       child: MaterialApp(
         title: 'Kanafeh Kings',
@@ -178,12 +199,16 @@ class _MyHomePageState extends State<MyHomePage> {
         floatingActionButton: FloatingActionButton(
           tooltip: 'Increment',
           onPressed: () {
+//            Navigator.push(
+//                context,
+//                MaterialPageRoute(
+//                    builder: (context) => CreateOrderScreen(
+//                          dateTime: widget.orderDate,
+//                        )));
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CreateOrderScreen(
-                          dateTime: widget.orderDate,
-                        )));
+                    builder: (context) => IncomeScreen()));
           },
           child: Icon(
             Icons.add,
@@ -361,7 +386,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   cloudFirestore.deleteOrder(
                                                       order,
                                                       widget.orderDate.month
-                                                          .toString(), widget.orderDate);
+                                                          .toString(),
+                                                      widget.orderDate);
                                                 },
                                                 child: Icon(
                                                   Icons.delete,
@@ -393,8 +419,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       width: 250,
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets.only(
-                                                                left: 10),
+                                                            const EdgeInsets
+                                                                .only(left: 10),
                                                         child: SelectableText(
                                                           order.address,
                                                           onTap: () {
@@ -404,7 +430,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                 "e.g. Dublin 24");
                                                           },
                                                           style: TextStyle(
-                                                              fontSize: addressTextSize),
+                                                              fontSize:
+                                                                  addressTextSize),
                                                         ),
                                                       ),
                                                     ),
@@ -420,8 +447,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 child: SelectableText(
                                                   order.orderDesc,
                                                   style: TextStyle(
-                                                      fontSize: orderTextSize
-                                                  ),
+                                                      fontSize: orderTextSize),
                                                 ),
                                               ),
                                             ),

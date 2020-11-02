@@ -1,10 +1,11 @@
 class WeeklyIncome {
   String profit;
+  String week;
 
-  WeeklyIncome({this.profit});
+  WeeklyIncome({this.profit, this.week});
 
   factory WeeklyIncome.fromMap(Map data) {
-    data = data ?? {"profit" : 0};
-    return WeeklyIncome(profit: data['income'].toString());
+    data = data ?? {"income" : 0};
+    return WeeklyIncome(profit: data['income'].toString(), week: data['week']);
   }
 }
