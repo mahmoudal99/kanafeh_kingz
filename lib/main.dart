@@ -323,9 +323,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                               InkWell(
                                                 onTap: () {
                                                   _updateValue(
-                                                      order.orderID,
+                                                      order,
                                                       "customerName",
-                                                      "e.g. John Smith");
+                                                      "e.g. John Smith",
+                                                      "Update name");
                                                 },
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(
@@ -413,9 +414,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             maxLines: 2,
                                                             onTap: () {
                                                               _updateValue(
-                                                                  order.orderID,
+                                                                  order,
                                                                   "address",
-                                                                  "e.g. Dublin 24");
+                                                                  "e.g. Dublin 24",
+                                                                  "Update Address");
                                                             },
                                                             style: TextStyle(
                                                                 fontSize: addressTextSize),
@@ -495,9 +497,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         child: InkWell(
                                                             onTap: () async {
                                                               _updateValue(
-                                                                  order.orderID,
+                                                                  order,
                                                                   "phoneNumber",
-                                                                  "e.g. 089 494 5632");
+                                                                  "e.g. 089 494 5632",
+                                                                  "Update Number");
                                                             },
                                                             child: Text(
                                                               order.phoneNumber,
@@ -564,7 +567,18 @@ class _MyHomePageState extends State<MyHomePage> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 1),
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
+                                    GestureDetector(
+                                      child: Image.asset(
+                                        "assets/writing.png",
+                                        height: 25,
+                                        width: 25,
+                                      ),
+                                      onTap: () {
+                                        _updateValue(order, "orderDesc", "Order note", "Add note");
+                                      },
+                                    ),
                                     Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 15),
@@ -652,7 +666,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  _updateValue(String id, String field, String hintText) async {
+  _updateValue(Order order, String field, String hintText, String heading) async {
     TextEditingController textEditingController = new TextEditingController();
 
     await showDialog(
@@ -666,7 +680,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: textEditingController,
                   autofocus: true,
                   decoration: new InputDecoration(
-                      labelText: 'Update Name', hintText: hintText),
+                      labelText: heading, hintText: hintText),
                 ),
               )
             ],
@@ -675,12 +689,24 @@ class _MyHomePageState extends State<MyHomePage> {
             new FlatButton(
                 child: const Text('UPDATE'),
                 onPressed: () {
-                  cloudFirestore.updateValue(
-                      id,
-                      widget.orderDate.day.toString(),
-                      widget.orderDate.month.toString(),
-                      textEditingController.text,
-                      field);
+                  
+                  if(field.contains("orderDesc")){
+                    cloudFirestore.updateValue(
+                        order.orderID,
+                        widget.orderDate.day.toString(),
+                        widget.orderDate.month.toString(),
+                        order.orderDesc + "\n" + textEditingController.text,
+                        field);
+                  }else {
+                    cloudFirestore.updateValue(
+                        order.orderID,
+                        widget.orderDate.day.toString(),
+                        widget.orderDate.month.toString(),
+                        textEditingController.text,
+                        field);
+                  }
+                  
+
                 })
           ],
         )
