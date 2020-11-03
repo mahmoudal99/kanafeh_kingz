@@ -231,4 +231,18 @@ class CloudFirestore {
       field: value,
     });
   }
+
+  Future<void> toggleIsPaid(
+      String id, String orderDay, String month,  bool isPaid) {
+    print(id);
+    _collectionReference
+        .doc("N44vzFG33WQSYv6XR74W")
+        .collection(month)
+        .doc(orderDay)
+        .collection("orders")
+        .doc(id)
+        .update({
+      "isPaid": !isPaid,
+    });
+  }
 }

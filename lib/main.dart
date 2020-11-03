@@ -643,16 +643,27 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           order.isPaid
-                              ? Icon(
+                              ? GestureDetector(
+                            onDoubleTap: () {
+                              cloudFirestore.toggleIsPaid(order.orderID, widget.orderDate.day.toString(), widget.orderDate.month.toString(), order.isPaid);
+                            },
+                                child: Icon(
                             Icons.done,
                             color: Colors.green,
                             size: iconSize,
-                          )
-                              : Icon(
+                          ),
+                              )
+                              : GestureDetector(
+                            onDoubleTap: () {
+                              cloudFirestore.toggleIsPaid(order.orderID, widget.orderDate.day.toString(), widget.orderDate.month.toString(), order.isPaid);
+
+                            },
+                                child: Icon(
                             Icons.do_not_disturb_alt,
                             color: Colors.red,
                             size: iconSize,
-                          )
+                          ),
+                              )
                         ],
                       ),
                     )
