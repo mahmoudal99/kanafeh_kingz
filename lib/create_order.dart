@@ -103,6 +103,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                       SizedBox(
                         height: 20,
                       ),
+
                       Text(
                         "Customer Name",
                         style: TextStyle(
@@ -126,36 +127,6 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                             border: UnderlineInputBorder(
                                 borderSide: new BorderSide(color: Colors.grey)),
                             hintText: 'Name',
-                            hintStyle:
-                                TextStyle(fontSize: 14.0, color: Colors.grey),
-                            labelStyle: TextStyle(color: Colors.black)),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        "Address",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15.0,
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.bold),
-                      ),
-                      TextFormField(
-                        maxLines: 1,
-                        controller: _addressController,
-                        validator: (val) =>
-                            val.isEmpty ? "Enter an address" : null,
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.place,
-                              size: 20,
-                              color: Colors.orange,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.grey)),
-                            hintText: 'Street Address',
                             hintStyle:
                                 TextStyle(fontSize: 14.0, color: Colors.grey),
                             labelStyle: TextStyle(color: Colors.black)),
@@ -191,6 +162,38 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                             TextStyle(fontSize: 14.0, color: Colors.grey),
                             labelStyle: TextStyle(color: Colors.black)),
                       ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Address",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15.0,
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextFormField(
+                        maxLines: 1,
+                        controller: _addressController,
+                        validator: (val) =>
+                            val.isEmpty ? "Enter an address" : null,
+                        cursorColor: Colors.black,
+                        decoration: InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.place,
+                              size: 20,
+                              color: Colors.orange,
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: new BorderSide(color: Colors.grey)),
+                            hintText: 'Street Address',
+                            hintStyle:
+                                TextStyle(fontSize: 14.0, color: Colors.grey),
+                            labelStyle: TextStyle(color: Colors.black)),
+                      ),
+
+
                       SizedBox(
                         height: 30,
                       ),
