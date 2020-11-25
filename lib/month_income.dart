@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:kanafeh_kings/models/monthly_income.dart';
 import 'package:provider/provider.dart';
 
-import 'models/weekly_income.dart';
-
 class MonthIncome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
     MonthlyIncome monthlyIncome = Provider.of<MonthlyIncome>(context);
     var allMonths = Provider.of<List<MonthlyIncome>>(context);
+    print("----" + allMonths.length.toString());
 
     return Container(
       color: Colors.white,
@@ -29,7 +28,7 @@ class MonthIncome extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Month Income",
+                    monthlyIncome.month + " Income",
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.white
@@ -64,7 +63,7 @@ class MonthIncome extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Month " + month.month,
+                              month.month,
                               style: TextStyle(color: Colors.black, fontSize: 18),
                             ),
                             Text(

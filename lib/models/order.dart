@@ -12,6 +12,11 @@ class Order {
   bool orderComplete = false;
   String paymentType;
   String orderDesc;
+  int indQuantity = 0;
+  int lrgQuantity = 0;
+  int smallQuantity = 0;
+  int baklava500gQuantity = 0;
+  int baklava1kgQuantity = 0;
 
   Order(
       {this.orderID,
@@ -24,7 +29,12 @@ class Order {
       this.isPaid,
       this.orderComplete,
       this.paymentType,
-      this.orderDesc});
+      this.orderDesc,
+      this.indQuantity,
+      this.lrgQuantity,
+      this.smallQuantity,
+      this.baklava500gQuantity,
+      this.baklava1kgQuantity});
 
   factory Order.fromMap(Map data, String id) {
     data = data ?? {};
@@ -40,6 +50,11 @@ class Order {
       orderComplete: data['orderComplete'],
       paymentType: data['paymentType'],
       orderDesc: data['orderDesc'],
+      indQuantity: data['indQuantity'],
+      lrgQuantity: data['lrgQuantity'],
+      smallQuantity: data['smallQuantity'],
+      baklava500gQuantity: data['baklava500gQuantity'],
+      baklava1kgQuantity: data['baklava1kgQuantity'],
     );
   }
 }
