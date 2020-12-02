@@ -13,6 +13,7 @@ class Order {
   String paymentType;
   String orderDesc;
   int indQuantity = 0;
+  int nabulsiQuantity = 0;
   int lrgQuantity = 0;
   int smallQuantity = 0;
   int baklava500gQuantity = 0;
@@ -31,6 +32,7 @@ class Order {
       this.paymentType,
       this.orderDesc,
       this.indQuantity,
+      this.nabulsiQuantity,
       this.lrgQuantity,
       this.smallQuantity,
       this.baklava500gQuantity,
@@ -51,6 +53,7 @@ class Order {
       paymentType: data['paymentType'],
       orderDesc: data['orderDesc'],
       indQuantity: data['indQuantity'],
+      nabulsiQuantity: data['nabulsiQuantity'],
       lrgQuantity: data['lrgQuantity'],
       smallQuantity: data['smallQuantity'],
       baklava500gQuantity: data['baklava500gQuantity'],

@@ -47,33 +47,68 @@ class CloudFirestore {
       "lrgQuantity": order.lrgQuantity,
       "indQuantity": order.indQuantity,
       "smallQuantity": order.smallQuantity,
+      "nabulsiQuantity": order.nabulsiQuantity,
       "baklava500gQuantity": order.baklava500gQuantity,
       "baklava1kgQuantity": order.baklava1kgQuantity
     });
 
-    int indBox = 0;
-    int smallBox = 0;
-    int lrgBox = 0;
-    int baklava500gBox = 0;
-    int baklava1kgBox = 0;
+    _updateQuantity(month, order, descMap);
+    _updateProfit(month, order);
+    _updateIncome(month, order, dateTime);
+  }
 
-    // Count boxes
-    if (descMap.containsKey("Large")) {
-      lrgBox = descMap["Large"];
-    }
-    if (descMap.containsKey("Small")) {
-      smallBox = descMap["Small"];
-    }
-    if (descMap.containsKey("Ind")) {
-      indBox = descMap["Ind"] + descMap["nabulsi"];
-    }
-    if (descMap.containsKey("500g")) {
-      baklava500gBox = descMap["500g"];
-    }
-    if (descMap.containsKey("1kg")) {
-      baklava1kgBox = descMap["1kg"];
-    }
+  void _updateQuantity(
+      String month, Order order, Map<String, int> descMap) async {
+    DocumentSnapshot quantitySnapshot = await _collectionReference
+        .doc("quantity")
+        .collection(month)
+        .doc(order.dateTime)
+        .get();
 
+    if (!quantitySnapshot.exists) {
+      _collectionReference
+          .doc("quantity")
+          .collection(month)
+          .doc(order.dateTime)
+          .set({
+        "Large": FieldValue.increment(descMap["Large"]),
+        "Small": FieldValue.increment(descMap["Small"]),
+        "Ind": FieldValue.increment((descMap["Ind"] + descMap["nabulsi"])),
+        "500g": FieldValue.increment(descMap["500g"]),
+        "1kg": FieldValue.increment(descMap["1kg"]),
+        "cheesePortion": FieldValue.increment(
+            (1 * (descMap["Ind"] + descMap["nabulsi"])) +
+                (descMap["Small"] * 6) +
+                (9 * descMap["Large"])),
+        "dough": FieldValue.increment((60 * descMap["Ind"]) +
+            (descMap["Small"] * 280) +
+            (380 * descMap["Large"])),
+        "nabulsiDough": FieldValue.increment((100 * descMap['nabulsi']))
+      });
+    } else {
+      _collectionReference
+          .doc("quantity")
+          .collection(month)
+          .doc(order.dateTime)
+          .update({
+        "Large": FieldValue.increment(descMap["Large"]),
+        "Small": FieldValue.increment(descMap["Small"]),
+        "Ind": FieldValue.increment((descMap["Ind"] + descMap["nabulsi"])),
+        "500g": FieldValue.increment(descMap["500g"]),
+        "1kg": FieldValue.increment(descMap["1kg"]),
+        "cheesePortion": FieldValue.increment(
+            (1 * (descMap["Ind"] + descMap["nabulsi"])) +
+                (descMap["Small"] * 6) +
+                (9 * descMap["Large"])),
+        "dough": FieldValue.increment((60 * descMap["Ind"]) +
+            (descMap["Small"] * 280) +
+            (380 * descMap["Large"])),
+        "nabulsiDough": FieldValue.increment((100 * descMap['nabulsi']))
+      });
+    }
+  }
+
+  void _updateProfit(String month, Order order) async {
     DocumentSnapshot documentSnapshot = await _collectionReference
         .doc("profit")
         .collection(month)
@@ -93,41 +128,15 @@ class CloudFirestore {
           .doc(order.dateTime)
           .update({"profit": FieldValue.increment(order.orderPrice)});
     }
+  }
 
-    DocumentSnapshot quantitySnapshot = await _collectionReference
-        .doc("quantity")
-        .collection(month)
-        .doc(order.dateTime)
-        .get();
-
-    if (!quantitySnapshot.exists) {
-      _collectionReference
-          .doc("quantity")
-          .collection(month)
-          .doc(order.dateTime)
-          .set({
-        "Large": FieldValue.increment(lrgBox),
-        "Small": FieldValue.increment(smallBox),
-        "Ind": FieldValue.increment(indBox),
-        "500g": FieldValue.increment(baklava500gBox),
-        "1kg": FieldValue.increment(baklava1kgBox),
-      });
-    } else {
-      _collectionReference
-          .doc("quantity")
-          .collection(month)
-          .doc(order.dateTime)
-          .update({
-        "Large": FieldValue.increment(lrgBox),
-        "Small": FieldValue.increment(smallBox),
-        "Ind": FieldValue.increment(indBox),
-        "500g": FieldValue.increment(baklava500gBox),
-        "1kg": FieldValue.increment(baklava1kgBox),
-      });
-    }
-
+  void _updateIncome(
+    String month,
+    Order order,
+    DateTime dateTime,
+  ) async {
     // Set weekly income
-    documentSnapshot = await _collectionReference
+    DocumentSnapshot documentSnapshot = await _collectionReference
         .doc("income")
         .collection('weeks')
         .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day])
@@ -156,16 +165,30 @@ class CloudFirestore {
         dateTime.weekday.toString(): order.orderPrice
       });
     } else {
-      _collectionReference
-          .doc("income")
-          .collection('weeks')
-          .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day])
-              .week
-              .toString())
-          .update({
-        "income": FieldValue.increment(order.orderPrice),
-        dateTime.weekday.toString(): FieldValue.increment(order.orderPrice)
-      });
+      if(dateTime.weekday.toString().contains("7")){
+        int week = Jiffy([dateTime.year, dateTime.month, dateTime.day])
+            .week - 1;
+        _collectionReference
+            .doc("income")
+            .collection('weeks')
+            .doc(week.toString())
+            .update({
+          "income": FieldValue.increment(order.orderPrice),
+          dateTime.weekday.toString(): FieldValue.increment(order.orderPrice)
+        });
+      }else {
+        _collectionReference
+            .doc("income")
+            .collection('weeks')
+            .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day])
+            .week
+            .toString())
+            .update({
+          "income": FieldValue.increment(order.orderPrice),
+          dateTime.weekday.toString(): FieldValue.increment(order.orderPrice)
+        });
+      }
+
     }
 
     // Set monthly income
@@ -182,7 +205,10 @@ class CloudFirestore {
           .doc("income")
           .collection('months')
           .doc(dateTime.month.toString())
-          .set({"income": order.orderPrice, "month": months[dateTime.month.toString()]});
+          .set({
+        "income": order.orderPrice,
+        "month": months[dateTime.month.toString()]
+      });
     } else {
       _collectionReference
           .doc("income")
@@ -207,16 +233,30 @@ class CloudFirestore {
         .doc(order.dateTime)
         .update({"profit": FieldValue.increment(-order.orderPrice)});
 
-    _collectionReference
-        .doc("income")
-        .collection('weeks')
-        .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day])
-            .week
-            .toString())
-        .update({
-      "income": FieldValue.increment(-order.orderPrice),
-      dateTime.weekday.toString(): FieldValue.increment(-order.orderPrice)
-    });
+    if(dateTime.weekday.toString().contains("7")){
+      int week = Jiffy([dateTime.year, dateTime.month, dateTime.day])
+          .week - 1;
+      _collectionReference
+          .doc("income")
+          .collection('weeks')
+          .doc(week.toString())
+          .update({
+        "income": FieldValue.increment(-order.orderPrice),
+        dateTime.weekday.toString(): FieldValue.increment(-order.orderPrice)
+      });
+    }else {
+      _collectionReference
+          .doc("income")
+          .collection('weeks')
+          .doc(Jiffy([dateTime.year, dateTime.month, dateTime.day])
+          .week
+          .toString())
+          .update({
+        "income": FieldValue.increment(-order.orderPrice),
+        dateTime.weekday.toString(): FieldValue.increment(-order.orderPrice)
+      });
+    }
+
 
     _collectionReference
         .doc("income")
@@ -236,6 +276,14 @@ class CloudFirestore {
       "Ind": FieldValue.increment(-order.indQuantity),
       "500g": FieldValue.increment(-order.baklava500gQuantity),
       "1kg": FieldValue.increment(-order.baklava1kgQuantity),
+      "cheesePortion": FieldValue.increment(-((1 * order.indQuantity) +
+          (order.smallQuantity * 6) +
+          (9 * order.lrgQuantity))),
+      "dough": FieldValue.increment(
+          -((60 * (order.indQuantity - order.nabulsiQuantity)) +
+              (order.smallQuantity * 280) +
+              (380 * order.lrgQuantity))),
+      "nabulsidough": FieldValue.increment(-(100 * order.nabulsiQuantity))
     });
   }
 
@@ -249,6 +297,19 @@ class CloudFirestore {
 
     return ref.snapshots().map((list) =>
         list.docs.map((doc) => Order.fromMap(doc.data(), doc.id)).toList());
+  }
+
+  Stream<Order> streamOrder(String day, String month, String orderId) {
+    var ref = _collectionReference
+        .doc('N44vzFG33WQSYv6XR74W')
+        .collection(month)
+        .doc(day)
+        .collection('orders')
+        .doc(orderId);
+
+    return ref
+        .snapshots()
+        .map((order) => Order.fromMap(order.data(), order.id));
   }
 
   Stream<Profit> streamProfit(String day, String month) {

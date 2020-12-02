@@ -253,8 +253,8 @@ class _MyOrderBoardState extends State<MyOrderBoard> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MyApp(
-                            dateTime: widget.orderDate,
+                          builder: (context) => Main(
+                            date: widget.orderDate,
                           )));
                 },
                 color: Colors.white,
@@ -320,8 +320,8 @@ class _MyOrderBoardState extends State<MyOrderBoard> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MyApp(
-                              dateTime: widget.orderDate,
+                            builder: (context) => Main(
+                              date: widget.orderDate,
                             )));
                   },
                   color: Colors.white,
@@ -356,598 +356,143 @@ class _MyOrderBoardState extends State<MyOrderBoard> {
                   .map(
                     (order) =>
                 // Order information
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
                   children: [
-                    Container(
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, top: 10, bottom: 20),
-                        child: Card(
-                          elevation: 10,
-                          child: Column(
-                            mainAxisAlignment:
-                            MainAxisAlignment.start,
-                            children: [
-                              // Name & Time
-                              Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 150,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, top: 10, bottom: 20),
+                            child: Card(
+                              elevation: 10,
+                              child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.start,
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      _updateTime(order.orderID);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 10,
-                                      ),
-                                      child: Align(
-                                        alignment:
-                                        Alignment.bottomCenter,
-                                        child: Text(
-                                          order.timeOfDay,
-                                          style: TextStyle(
-                                              fontSize: textSize,
-                                              fontWeight:
-                                              FontWeight.bold,
-                                              color: Colors.red),
+                                  // Name & Time
+                                  Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          _updateTime(order.orderID);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 10,
+                                          ),
+                                          child: Align(
+                                            alignment:
+                                            Alignment.bottomCenter,
+                                            child: Text(
+                                              order.timeOfDay,
+                                              style: TextStyle(
+                                                  fontSize: textSize,
+                                                  fontWeight:
+                                                  FontWeight.bold,
+                                                  color: Colors.red),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      _updateValue(
-                                          order,
-                                          "customerName",
-                                          "e.g. John Smith",
-                                          "Update name");
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10, ),
-                                      child: Align(
-                                        alignment:
-                                        Alignment.bottomCenter,
-                                        child: Text(
-                                          order.customerName,
-                                          style: TextStyle(
-                                              fontSize: textSize,
-                                              fontWeight:
-                                              FontWeight.bold,
-                                              color: Colors.black),
+                                      InkWell(
+                                        onTap: () {
+                                          _updateValue(
+                                              order,
+                                              "customerName",
+                                              "e.g. John Smith",
+                                              "Update name");
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 10),
+                                          child: Align(
+                                            alignment:
+                                            Alignment.bottomCenter,
+                                            child: Text(
+                                              order.customerName,
+                                              style: TextStyle(
+                                                  fontSize: textSize,
+                                                  fontWeight:
+                                                  FontWeight.bold,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
+
+                                    ],
                                   ),
 
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 15, bottom: 5),
-                                    child: InkWell(
-                                      onTap: () {
-                                        cloudFirestore.deleteOrder(
-                                            order,
-                                            widget.orderDate.month
-                                                .toString(), widget.orderDate);
-                                      },
-                                      child: Icon(
-                                        Icons.delete,
-                                        size: iconSize,
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
-                              // Location & Payment Type
-                              // Row(
-                              //   mainAxisAlignment:
-                              //   MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Column(
-                              //       children: [
-                              //         Row(
-                              //           children: [
-                              //             Padding(
-                              //               padding: EdgeInsets.only(
-                              //                   left: 10),
-                              //               child: Icon(
-                              //                 Icons.location_on,
-                              //                 color: Colors.teal,
-                              //                 size: iconSize,
-                              //               ),
-                              //             ),
-                              //             Container(
-                              //               width: 200,
-                              //               child: Padding(
-                              //                 padding:
-                              //                 const EdgeInsets.only(
-                              //                     left: 10),
-                              //                 child: SelectableText(
-                              //                   order.address,
-                              //                   maxLines: 2,
-                              //                   onTap: () {
-                              //                     _updateValue(
-                              //                         order,
-                              //                         "address",
-                              //                         "e.g. Dublin 24",
-                              //                         "Update Address");
-                              //                   },
-                              //                   style: TextStyle(
-                              //                       fontSize: addressTextSize),
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ],
-                              //         )
-                              //       ],
-                              //     ),
-                              //     Visibility(
-                              //       visible: showOrderDesc,
-                              //       child: Padding(
-                              //         padding: const EdgeInsets.only(
-                              //             top: 20),
-                              //         child: SelectableText(
-                              //           order.orderDesc,
-                              //           style: TextStyle(
-                              //               fontSize: orderTextSize
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //     Padding(
-                              //       padding: const EdgeInsets.only(
-                              //           bottom: 20,
-                              //           top: 20,
-                              //           right: 10),
-                              //       child: Align(
-                              //           alignment:
-                              //           Alignment.bottomCenter,
-                              //           child: order.paymentType
-                              //               .contains("Cash")
-                              //               ? Image.asset(
-                              //             "assets/cash.png",
-                              //             height: 35,
-                              //             width: 35,
-                              //           )
-                              //               : Icon(
-                              //             Icons.credit_card,
-                              //             color: Colors.black,
-                              //             size: iconSize,
-                              //           )),
-                              //     ),
-                              //   ],
-                              // ),
-                              // // Number & Order Total
-                              // Row(
-                              //   mainAxisAlignment:
-                              //   MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Column(
-                              //       children: [
-                              //         Row(
-                              //           children: [
-                              //             InkWell(
-                              //               onTap: () {
-                              //                 _launchCaller(
-                              //                     order.phoneNumber);
-                              //               },
-                              //               child: Padding(
-                              //                 padding:
-                              //                 EdgeInsets.only(
-                              //                     left: 10),
-                              //                 child: Icon(
-                              //                   Icons.phone,
-                              //                   color:
-                              //                   Colors.blueAccent,
-                              //                   size: iconSize,
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //             Padding(
-                              //               padding:
-                              //               const EdgeInsets.only(
-                              //                   left: 10),
-                              //               child: InkWell(
-                              //                   onTap: () async {
-                              //                     _updateValue(
-                              //                         order,
-                              //                         "phoneNumber",
-                              //                         "e.g. 089 494 5632",
-                              //                         "Update Number");
-                              //                   },
-                              //                   child: Text(
-                              //                     order.phoneNumber,
-                              //                     style: TextStyle(
-                              //                         fontSize:
-                              //                         textSize),
-                              //                   )),
-                              //             ),
-                              //           ],
-                              //         )
-                              //       ],
-                              //     ),
-                              //     Column(
-                              //       children: [
-                              //         Padding(
-                              //           padding:
-                              //           const EdgeInsets.only(
-                              //               bottom: 5,
-                              //               top: 10,
-                              //               right: 10),
-                              //           child: Align(
-                              //             alignment:
-                              //             Alignment.bottomCenter,
-                              //             child: Text(
-                              //               "Order Total",
-                              //               style: TextStyle(
-                              //                   fontSize:
-                              //                   textSize - 2,
-                              //                   fontWeight:
-                              //                   FontWeight.bold,
-                              //                   color: Colors.green),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //         Padding(
-                              //           padding:
-                              //           const EdgeInsets.only(
-                              //               bottom: 20,
-                              //               right: 10),
-                              //           child: Align(
-                              //             alignment:
-                              //             Alignment.bottomCenter,
-                              //             child: Text(
-                              //               "€" +
-                              //                   order.orderPrice
-                              //                       .toString(),
-                              //               style: TextStyle(
-                              //                   fontSize: textSize,
-                              //                   fontWeight: FontWeight
-                              //                       .normal),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ],
-                              // )
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      width: 200,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 10, top: 10, bottom: 20),
-                        child: Card(
-                          elevation: 10,
-                          child: Column(
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
-                            children: [
-                              // Name & Time
-                              Column(
+                        Container(
+                          width: 200,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                right: 10, top: 10, bottom: 20),
+                            child: Card(
+                              elevation: 10,
+                              child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.center,
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      _updateValue(order, "orderDesc", "Order note", "Add note");
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 5, left: 20, bottom: 10, right: 20),
-                                      child: Align(
-                                        alignment:
-                                        Alignment.bottomCenter,
-                                        child: Text(
-                                          order.orderDesc,
-                                          style: TextStyle(
-                                              fontSize: textSize,
-                                              fontWeight:
-                                              FontWeight.normal,
-                                              color: Colors.black),
+                                  // Name & Time
+                                  Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          _updateValue(order, "orderDesc", "Order note", "Add note");
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 5, left: 20, bottom: 10, right: 20),
+                                          child: Align(
+                                            alignment:
+                                            Alignment.bottomCenter,
+                                            child: Text(
+                                              order.orderDesc,
+                                              style: TextStyle(
+                                                  fontSize: textSize,
+                                                  fontWeight:
+                                                  FontWeight.normal,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
+
+                                    ],
                                   ),
-                                  // InkWell(
-                                  //   onTap: () {
-                                  //     _updateTime(order.orderID);
-                                  //   },
-                                  //   child: Padding(
-                                  //     padding: const EdgeInsets.only(
-                                  //       top: 10,
-                                  //     ),
-                                  //     child: Align(
-                                  //       alignment:
-                                  //       Alignment.bottomCenter,
-                                  //       child: Text(
-                                  //         order.timeOfDay,
-                                  //         style: TextStyle(
-                                  //             fontSize: textSize,
-                                  //             fontWeight:
-                                  //             FontWeight.bold,
-                                  //             color: Colors.red),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // Padding(
-                                  //   padding: EdgeInsets.only(
-                                  //       top: 15, right: 10, left: 20),
-                                  //   child: InkWell(
-                                  //     onTap: () {
-                                  //       cloudFirestore.deleteOrder(
-                                  //           order,
-                                  //           widget.orderDate.month
-                                  //               .toString(), widget.orderDate);
-                                  //     },
-                                  //     child: Icon(
-                                  //       Icons.delete,
-                                  //       size: iconSize,
-                                  //     ),
-                                  //   ),
-                                  // ),
+
                                 ],
                               ),
-                              // Location & Payment Type
-                              // Row(
-                              //   mainAxisAlignment:
-                              //   MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Column(
-                              //       children: [
-                              //         Row(
-                              //           children: [
-                              //             Padding(
-                              //               padding: EdgeInsets.only(
-                              //                   left: 10),
-                              //               child: Icon(
-                              //                 Icons.location_on,
-                              //                 color: Colors.teal,
-                              //                 size: iconSize,
-                              //               ),
-                              //             ),
-                              //             Container(
-                              //               width: 200,
-                              //               child: Padding(
-                              //                 padding:
-                              //                 const EdgeInsets.only(
-                              //                     left: 10),
-                              //                 child: SelectableText(
-                              //                   order.address,
-                              //                   maxLines: 2,
-                              //                   onTap: () {
-                              //                     _updateValue(
-                              //                         order,
-                              //                         "address",
-                              //                         "e.g. Dublin 24",
-                              //                         "Update Address");
-                              //                   },
-                              //                   style: TextStyle(
-                              //                       fontSize: addressTextSize),
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ],
-                              //         )
-                              //       ],
-                              //     ),
-                              //     Visibility(
-                              //       visible: showOrderDesc,
-                              //       child: Padding(
-                              //         padding: const EdgeInsets.only(
-                              //             top: 20),
-                              //         child: SelectableText(
-                              //           order.orderDesc,
-                              //           style: TextStyle(
-                              //               fontSize: orderTextSize
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //     Padding(
-                              //       padding: const EdgeInsets.only(
-                              //           bottom: 20,
-                              //           top: 20,
-                              //           right: 10),
-                              //       child: Align(
-                              //           alignment:
-                              //           Alignment.bottomCenter,
-                              //           child: order.paymentType
-                              //               .contains("Cash")
-                              //               ? Image.asset(
-                              //             "assets/cash.png",
-                              //             height: 35,
-                              //             width: 35,
-                              //           )
-                              //               : Icon(
-                              //             Icons.credit_card,
-                              //             color: Colors.black,
-                              //             size: iconSize,
-                              //           )),
-                              //     ),
-                              //   ],
-                              // ),
-                              // // Number & Order Total
-                              // Row(
-                              //   mainAxisAlignment:
-                              //   MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Column(
-                              //       children: [
-                              //         Row(
-                              //           children: [
-                              //             InkWell(
-                              //               onTap: () {
-                              //                 _launchCaller(
-                              //                     order.phoneNumber);
-                              //               },
-                              //               child: Padding(
-                              //                 padding:
-                              //                 EdgeInsets.only(
-                              //                     left: 10),
-                              //                 child: Icon(
-                              //                   Icons.phone,
-                              //                   color:
-                              //                   Colors.blueAccent,
-                              //                   size: iconSize,
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //             Padding(
-                              //               padding:
-                              //               const EdgeInsets.only(
-                              //                   left: 10),
-                              //               child: InkWell(
-                              //                   onTap: () async {
-                              //                     _updateValue(
-                              //                         order,
-                              //                         "phoneNumber",
-                              //                         "e.g. 089 494 5632",
-                              //                         "Update Number");
-                              //                   },
-                              //                   child: Text(
-                              //                     order.phoneNumber,
-                              //                     style: TextStyle(
-                              //                         fontSize:
-                              //                         textSize),
-                              //                   )),
-                              //             ),
-                              //           ],
-                              //         )
-                              //       ],
-                              //     ),
-                              //     Column(
-                              //       children: [
-                              //         Padding(
-                              //           padding:
-                              //           const EdgeInsets.only(
-                              //               bottom: 5,
-                              //               top: 10,
-                              //               right: 10),
-                              //           child: Align(
-                              //             alignment:
-                              //             Alignment.bottomCenter,
-                              //             child: Text(
-                              //               "Order Total",
-                              //               style: TextStyle(
-                              //                   fontSize:
-                              //                   textSize - 2,
-                              //                   fontWeight:
-                              //                   FontWeight.bold,
-                              //                   color: Colors.green),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //         Padding(
-                              //           padding:
-                              //           const EdgeInsets.only(
-                              //               bottom: 20,
-                              //               right: 10),
-                              //           child: Align(
-                              //             alignment:
-                              //             Alignment.bottomCenter,
-                              //             child: Text(
-                              //               "€" +
-                              //                   order.orderPrice
-                              //                       .toString(),
-                              //               style: TextStyle(
-                              //                   fontSize: textSize,
-                              //                   fontWeight: FontWeight
-                              //                       .normal),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ],
-                              // )
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+
+
+
+
+                      ],
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(right: 1),
-                    //   child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       GestureDetector(
-                    //         child: Image.asset(
-                    //           "assets/writing.png",
-                    //           height: 25,
-                    //           width: 25,
-                    //         ),
-                    //         onTap: () {
-                    //           _updateValue(order, "orderDesc", "Order note", "Add note");
-                    //         },
-                    //       ),
-                    //       Padding(
-                    //         padding:
-                    //         const EdgeInsets.only(bottom: 15),
-                    //         child: Column(
-                    //           children: [
-                    //             Transform.scale(
-                    //               scale: checkBoxScale,
-                    //               child: Checkbox(
-                    //                 value: order.orderComplete,
-                    //                 onChanged: (val) {
-                    //                   cloudFirestore.setOrderDone(
-                    //                       order.orderID,
-                    //                       widget.orderDate.day
-                    //                           .toString(),
-                    //                       val,
-                    //                       widget.orderDate.month
-                    //                           .toString());
-                    //                   order.orderComplete = val;
-                    //                 },
-                    //               ),
-                    //             ),
-                    //             Text(
-                    //               "Order \nComplete",
-                    //               textAlign: TextAlign.center,
-                    //               style: TextStyle(
-                    //                   fontSize: orderCompleteText),
-                    //             )
-                    //           ],
-                    //         ),
-                    //       ),
-                    //       order.isPaid
-                    //           ? GestureDetector(
-                    //         onDoubleTap: () {
-                    //           cloudFirestore.toggleIsPaid(order.orderID, widget.orderDate.day.toString(), widget.orderDate.month.toString(), order.isPaid);
-                    //         },
-                    //         child: Icon(
-                    //           Icons.done,
-                    //           color: Colors.green,
-                    //           size: iconSize,
-                    //         ),
-                    //       )
-                    //           : GestureDetector(
-                    //         onDoubleTap: () {
-                    //           cloudFirestore.toggleIsPaid(order.orderID, widget.orderDate.day.toString(), widget.orderDate.month.toString(), order.isPaid);
-                    //
-                    //         },
-                    //         child: Icon(
-                    //           Icons.do_not_disturb_alt,
-                    //           color: Colors.red,
-                    //           size: iconSize,
-                    //         ),
-                    //       )
-                    //     ],
-                    //   ),
-                    // )
+                    Divider(
+                      color: Colors.grey,
+                    )
                   ],
                 ),
               )
                   .toList()),
+
         ],
       ),
     );

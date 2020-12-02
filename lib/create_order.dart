@@ -682,6 +682,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                                   constructOrdermap()["Ind"] +
                                                       constructOrdermap()[
                                                           "nabulsi"],
+                                              nabulsiQuantity: constructOrdermap()["nabulsi"],
                                               lrgQuantity:
                                                   constructOrdermap()['Large'],
                                               smallQuantity:
@@ -699,8 +700,8 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                                 PageTransition(
                                                     type: PageTransitionType
                                                         .rightToLeft,
-                                                    child: MyApp(
-                                                      dateTime: widget.dateTime,
+                                                    child: Main(
+                                                      date: widget.dateTime,
                                                     ),
                                                     inheritTheme: false,
                                                     duration: Duration(
@@ -723,6 +724,8 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
       ),
     );
   }
+
+
 
   _pickDate() async {
     DateTime dateTime = await showDatePicker(
